@@ -5,7 +5,8 @@
       static $classes = null;
       if ($classes === null) {
         $classes = array(
-          'mydate' => '/MyDate.php'
+          'mydate' => '/AvantiDates/AvantiDate.php',
+          'dateInterface' => '/AvantiDates/Interface/DateInterface.php',
         );
       }
       $cn = strtolower($class);
