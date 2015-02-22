@@ -5,19 +5,275 @@ use AvantiDates\phpDate;
 use AvantiDates\DateOperations;
 
 /**
- * @todo: move to CustomDate
- * Class MyDateTest
+ * Class CustomDateTest
  */
-class MyDateTest extends PHPUnit_Framework_TestCase {
+class CustomDateTest extends PHPUnit_Framework_TestCase {
 
-    /**
-     * @TODO: use dataProvider.
-     */
-    public function testSimpleTotalDays() {
+  /**
+   * Test testCalculateDays().
+   *
+   * @dataProvider getDatesAndDaysBetween
+   */
 
-      $this->assertTotalDays('2014/01/01', '2014/01/04');
-    }
+  public function testCalculateDays($given, $expected) {
+    // Our implementation.
+    $avantiDate = new AvantiDate();
 
+    $start = $given['start'];
+    $end = $given['end'];
+    $avantiDate->calculateDaysBetween($start, $end);
+    $this->assertSame($avantiDate->calculateDaysBetween($start, $end), $expected);
+  }
+
+  /**
+   * DataProvider.
+   */
+  public function getDatesAndDaysBetween() {
+    return array(
+      // Simple days in same month and year.
+      array(
+        'given' => array(
+          'start' => '2014/01/01',
+          'end' => '2014/01/04',
+        ),
+        'expected' => 3,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2014/01/01',
+          'end' => '2014/01/01',
+        ),
+        'expected' => 0,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2014/01/01',
+          'end' => '2014/01/15',
+        ),
+        'expected' => 14,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2014/01/01',
+          'end' => '2014/01/25',
+        ),
+        'expected' => 24,
+      ),
+
+      // NOTE: Expected result as per current spec.
+      array(
+        'given' => array(
+          'start' => '2014/01/10',
+          'end' => '2014/01/01',
+        ),
+        'expected' => -9,
+      ),
+
+
+      // Different months and days, same years.
+      // Explanation
+      // Month 1: 31 - 10 = 21
+      // Month 2: 59 - 01 - 31= 27
+      // total days - month2 - month1: 58 - 27 = 31
+      array(
+        'given' => array(
+          'start' => '2014/01/10',
+          'end' => '2014/02/01',
+        ),
+        'expected' => 37,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2014/01/10',
+          'end' => '2014/02/10',
+        ),
+        'expected' => 47,
+      ),
+
+
+    );
+  }
+
+  /**
+   * @dataProvider getYears
+   */
+  public function testGetYear($given, $expected) {
+    // Our implementation.
+    $avantiDate = new AvantiDate();
+
+    $this->assertSame($avantiDate->getYear($given), $expected);
+
+  }
+
+  /**
+   * DataProvider.
+   */
+  public function getYears() {
+    return array(
+      array(
+        'given' => '2014/01/01',
+        'expected' => 2014,
+      ),
+
+      array(
+        'given' => '2020/01/01',
+        'expected' => 2020,
+      ),
+
+      array(
+        'given' => '3014/01/01',
+        'expected' => 3014,
+      ),
+
+      array(
+        'given' => '1014/01/01',
+        'expected' => 1014,
+      ),
+
+      array(
+        'given' => '2022/01/01',
+        'expected' => 2022,
+      ),
+
+    );
+
+  }
+
+  /**
+   * @dataProvider getMonths
+   */
+  public function testGetMonth($given, $expected) {
+    // Our implementation.
+    $avantiDate = new AvantiDate();
+
+    $this->assertSame($avantiDate->getMonth($given), $expected);
+
+  }
+
+  /**
+   * DataProvider.
+   */
+  public function getMonths() {
+    return array(
+      array(
+        'given' => '2014/01/01',
+        'expected' => 01,
+      ),
+
+      array(
+        'given' => '2020/12/01',
+        'expected' => 12,
+      ),
+
+      array(
+        'given' => '3014/11/01',
+        'expected' => 11,
+      ),
+
+      array(
+        'given' => '1014/05/01',
+        'expected' => 5,
+      ),
+
+      array(
+        'given' => '2022/03/01',
+        'expected' => 3,
+      ),
+
+    );
+  }
+
+
+  /**
+   * @dataProvider getDays
+   */
+  public function testGetDay($given, $expected) {
+    // Our implementation.
+    $avantiDate = new AvantiDate();
+
+    $this->assertSame($avantiDate->getDay($given), $expected);
+
+  }
+
+  /**
+   * DataProvider.
+   */
+  public function getDays() {
+    return array(
+      array(
+        'given' => '2014/01/01',
+        'expected' => 01,
+      ),
+
+      array(
+        'given' => '2020/11/10',
+        'expected' => 10,
+      ),
+
+      array(
+        'given' => '3014/01/30',
+        'expected' => 30,
+      ),
+
+      array(
+        'given' => '1014/12/20',
+        'expected' => 20,
+      ),
+
+      array(
+        'given' => '2022/6/06',
+        'expected' => 6,
+      ),
+
+    );
+
+  }
+
+
+
+
+
+  /**
+   * Test Dates.
+   *
+   * @dataProvider getDates
+   */
+  public function testDates($dateStart, $dateEnd) {
+
+//      $this->assertTotalDays($dateStart, $dateEnd);
+  }
+
+  /**
+   * DataProvider.
+   */
+  public function getDates() {
+    return array(
+      // Simple days in same year.
+      array(
+        'given' => '2014/01/01',
+        'expected' => '2014/01/04',
+      ),
+
+      array(
+        'given' => '2014/01/01',
+        'expected' => '2014/01/04',
+      ),
+
+      array(
+        'given' => '2014/01/01',
+        'expected' => '2014/01/14',
+      ),
+
+    );
+  }
+
+
+
+  // @TODO: simplify using a dateprovider.
 //    public function testSimpleDays() {
 //
 //      $this->assertDays('2014/01/01', '2014/01/04');
@@ -177,19 +433,16 @@ class MyDateTest extends PHPUnit_Framework_TestCase {
     private function assertTotalDays($start, $end) {
 
       // Our implementation.
-//      $mydate = new MyDate();
       $avantiDate = new AvantiDate();
       $operationWithAvantiDate = new DateOperations($avantiDate);
 
-////      // PHP Implementation to compare with.
+      // PHP Implementation to compare with.
       $phpDate = new phpDate($start, $end);
-      $operationWithPHPDate = new \AvantiDates\DateOperations($phpDate);
-
-//      $myDate = $avantiDate->diff($start, $end);
-//      $a = $this->dateDiff($s, $e);
+      $operationWithPHPDate = new DateOperations($phpDate);
 
       $this->assertSame($operationWithAvantiDate->diff($start, $end), $operationWithPHPDate->diff($start, $end));
     }
+
 //
 //    private function assertInvert($s, $e) {
 //      $d = MyDate::diff($s, $e);

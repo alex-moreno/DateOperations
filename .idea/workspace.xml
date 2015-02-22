@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2859d6ae-2aab-406f-a282-4488a09a0650" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/autoload.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AvantiDates/AvantiDate.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AvantiDates/Interface/DateInterface.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AvantiDates/phpDate.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AvantiDates/tests/bootstrap.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/DateOperations.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/autoload.php" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/AvantiDates/tests/MyDateTest.php" afterPath="$PROJECT_DIR$/tests/MyDateTest.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/phpunit.xml" afterPath="$PROJECT_DIR$/phpunit.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/AvantiDateTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/MyDateTest.php" afterPath="$PROJECT_DIR$/tests/MyDateTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="phpdatechallenge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,19 +38,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AvantiDate.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/AvantiDates/AvantiDate.php">
+      <file leaf-file-name="AvantiDateTest.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/AvantiDateTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="3" selection-start="1484" selection-end="1484" vertical-scroll-proportion="0.46286473" vertical-offset="956" max-vertical-offset="1710">
+            <state line="21" column="4" selection-start="326" selection-end="326" vertical-scroll-proportion="-11.875" vertical-offset="0" max-vertical-offset="465">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyDateTest.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AvantiDate.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AvantiDates/AvantiDate.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="80" column="124" selection-start="1645" selection-end="1645" vertical-scroll-proportion="-7.2" vertical-offset="840" max-vertical-offset="2595">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyDateTest.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/MyDateTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="187" column="0" selection-start="4042" selection-end="4042" vertical-scroll-proportion="-7.88" vertical-offset="2411" max-vertical-offset="3165">
+            <state line="79" column="50" selection-start="1738" selection-end="1738" vertical-scroll-proportion="0.5225464" vertical-offset="791" max-vertical-offset="6960">
               <folding>
                 <element signature="e#7#34#0" expanded="true" />
               </folding>
@@ -101,11 +103,12 @@
         <option value="$PROJECT_DIR$/phpunit.xml" />
         <option value="$PROJECT_DIR$/src/AvantiDate.php" />
         <option value="$PROJECT_DIR$/src/DateInterface.php" />
-        <option value="$PROJECT_DIR$/src/AvantiDates/AvantiDate.php" />
         <option value="$PROJECT_DIR$/src/AvantiDates/DateOperations.php" />
         <option value="$PROJECT_DIR$/src/AvantiDates/phpDate.php" />
         <option value="$PROJECT_DIR$/autoload.php" />
         <option value="$PROJECT_DIR$/src/AvantiDates/interfaces/DateInterface.php" />
+        <option value="$PROJECT_DIR$/tests/AvantiDateTest.php" />
+        <option value="$PROJECT_DIR$/src/AvantiDates/AvantiDate.php" />
         <option value="$PROJECT_DIR$/tests/MyDateTest.php" />
       </list>
     </option>
@@ -339,6 +342,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/AvantiDates/tests" />
       <recent name="$PROJECT_DIR$" />
@@ -573,6 +577,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/AvantiDates/DateOperations.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="49" selection-start="505" selection-end="505" vertical-scroll-proportion="0.5576923" vertical-offset="0" max-vertical-offset="780">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="510" column="9" selection-start="14828" selection-end="14828" vertical-scroll-proportion="0.34358975" vertical-offset="7382" max-vertical-offset="16890">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AvantiDates/phpDate.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="0" selection-start="156" selection-end="156" vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="480">
@@ -582,26 +600,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/MyDateTest.php">
+    <entry file="file://$PROJECT_DIR$/tests/AvantiDateTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="187" column="0" selection-start="4042" selection-end="4042" vertical-scroll-proportion="-7.88" vertical-offset="2411" max-vertical-offset="3165">
-          <folding>
-            <element signature="e#7#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AvantiDates/DateOperations.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="73" selection-end="73" vertical-scroll-proportion="0.09615385" vertical-offset="0" max-vertical-offset="780">
+        <state line="21" column="4" selection-start="326" selection-end="326" vertical-scroll-proportion="-11.875" vertical-offset="0" max-vertical-offset="465">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AvantiDates/AvantiDate.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="3" selection-start="1484" selection-end="1484" vertical-scroll-proportion="0.46286473" vertical-offset="956" max-vertical-offset="1710">
+        <state line="80" column="124" selection-start="1645" selection-end="1645" vertical-scroll-proportion="-7.2" vertical-offset="840" max-vertical-offset="2595">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/MyDateTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="50" selection-start="1738" selection-end="1738" vertical-scroll-proportion="0.5225464" vertical-offset="791" max-vertical-offset="6960">
+          <folding>
+            <element signature="e#7#34#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

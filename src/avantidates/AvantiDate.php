@@ -38,6 +38,19 @@ class AvantiDate implements DateInterface {
   }
 
   /**
+   * Return if $date is a valid date.
+   *
+   * @param $date
+   *
+   * @return bool
+   *   True if it's valid.
+   */
+  public function isValidDate($date) {
+
+    return TRUE;
+  }
+
+  /**
    * Calculate number of days between two dates.
    *
    * @param $start
@@ -48,12 +61,39 @@ class AvantiDate implements DateInterface {
    * @return int
    *   Number of days between start and end date.
    */
-  public function calculateDays($start, $end) {
-    // Is leap Year?
-    $yearStart = $this->getYear('start');
-    $yearEnd = $this->getYear('end');
+  public function calculateDaysBetween($start, $end) {
+    // Return value.
+    $numberDays = 0;
 
-    return 0;
+    $yearStart = $this->getYear($start);
+    $monthStart = $this->getMonth($start);
+    $dayStart = $this->getDay($start);
+
+    $yearEnd = $this->getYear($end);
+    $monthEnd = $this->getMonth($end);
+    $dayEnd = $this->getDay($end);
+
+    // 1st, is same year?
+    if ($yearEnd == $yearStart && $monthStart == $monthEnd) {
+      $numberDays = $dayEnd - $dayStart;
+    }
+    elseif ($yearStart == $yearEnd) {
+      $numberDays = ($this->getDaysPriorToMonth($monthEnd) - $dayEnd) - ($this->getDaysPriorToMonth($monthStart) - $dayStart);
+    }
+
+    return intval($numberDays);
+  }
+
+
+  /**
+   *
+   * @param $month
+   * @return mixed
+   */
+  public function getDaysPriorToMonth($month) {
+    $days = array(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334);
+
+    return $days[$month-1];
   }
 
   /**
@@ -63,7 +103,7 @@ class AvantiDate implements DateInterface {
    *   Year to calculate.
    *
    * @return bool
-   *   True if $year is Leap.
+   *   TRUE if $year is Leap, FALSE otherwise.
    */
   public function isLeapYear($year) {
 
@@ -90,19 +130,38 @@ class AvantiDate implements DateInterface {
   /**
    * Get year in $date.
    *
-   * @todo: getMonth, getDay
+   * @todo: worth using regex instead? Probably not.
    *
    * @param $date
+   *   Input date in yyyy/mm/dd format.
    * @return string
    */
   public function getYear($date) {
-    if ($date == 'start') {
-      return substr($this->dateStart, 0,3);
-    }
-    else {
-      return substr($this->dateEnd, 0,3);
-    }
+    return intval(substr($date, 0,4));
   }
 
+  /**
+   * Get the month in $date.
+   *
+   * @param $date
+   *   Input date in yyyy/mm/dd format.
+   *
+   * @return string
+   */
+  public function getMonth($date) {
+    return intval(substr($date, 5,2));
+  }
+
+  /**
+   * Get the day in $date.
+   *
+   * @param $date
+   *   Input date in yyyy/mm/dd format.
+   *
+   * @return string
+   */
+  public function getDay($date) {
+    return intval(substr($date, 8,2));
+  }
 
 }
