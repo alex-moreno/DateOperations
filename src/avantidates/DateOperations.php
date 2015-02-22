@@ -1,4 +1,9 @@
 <?php
+
+namespace AvantiDates;
+
+use AvantiDates\Interfaces\DateInterface;
+
 /**
  * Created by PhpStorm.
  * User: alexmoreno
@@ -7,20 +12,21 @@
  */
 class DateOperations {
 
-  protected $dateObject = NULL;
+  protected $dateObject;
 
   /**
+   * Constructor.
+   *
    * @param DateInterface $dateObject
    */
   public function __construct (DateInterface $dateObject) {
-    $this->$dateObject = $dateObject;
+    $this->dateObject = $dateObject;
   }
 
   /**
-   * @param $start
-   * @param $end
+   * {@inheritdoc}
    */
   public function diff($start, $end) {
-    $this->dateObject->diff($start, $end);
+    return $this->dateObject->diff($start, $end);
   }
 }

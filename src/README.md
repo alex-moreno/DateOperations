@@ -1,0 +1,6 @@
+
+execute:
+
+'''
+../vendor/bin/phpunit
+'''

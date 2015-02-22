@@ -1,16 +1,21 @@
 <?php
 
+namespace AvantiDates;
+
+use AvantiDates\Interfaces\DateInterface;
+use DateTime;
+
 /**
- * Class MyDate
+ * Class phpDate.
  */
 class phpDate implements DateInterface {
 
   /**
-   * @param $start
-   * @param $end
-   * @return object
+   * {@inheritdoc}
    */
   public function diff($start, $end) {
+    date_default_timezone_set('Europe/London');
+
     $start = DateTime::createFromFormat('Y/m/d', $start);
     $end = DateTime::createFromFormat('Y/m/d', $end);
 

@@ -1,0 +1,31 @@
+<phpunit colors="true" bootstrap="autoload.php">
+  <php>
+    <!--  Set error reporting to E_ALL.  -->
+    <ini name="error_reporting" value="32767"/>
+    <!--
+     Do not limit the amount of memory tests take to run.
+    -->
+    <ini name="memory_limit" value="-1"/>
+  </php>
+  <testsuites>
+    <testsuite name="PHP Date Challenge">
+      <directory>tests</directory>
+        <directory>/tests</directory>
+    </testsuite>
+  </testsuites>
+  <!--  Filter for coverage reports.  -->
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+        <directory suffix=".php">src/AvantiDates/AvantiDate</directory>
+    <exclude>
+    </exclude>
+    </whitelist>
+  </filter>
+  <!--  Exclude Groups  -->
+  <groups>
+    <exclude>
+      <group>disabled</group>
+      <group>integrationtest</group>
+    </exclude>
+  </groups>
+</phpunit>

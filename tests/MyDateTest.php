@@ -1,6 +1,14 @@
 <?php
 
-  class MyDateTest extends PHPUnit_Framework_TestCase {
+use AvantiDates\AvantiDate;
+use AvantiDates\phpDate;
+use AvantiDates\DateOperations;
+
+/**
+ * @todo: move to CustomDate
+ * Class MyDateTest
+ */
+class MyDateTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @TODO: use dataProvider.
@@ -8,7 +16,6 @@
     public function testSimpleTotalDays() {
 
       $this->assertTotalDays('2014/01/01', '2014/01/04');
-
     }
 
 //    public function testSimpleDays() {
@@ -167,10 +174,21 @@
 //      $this->assertSame($a->d, $d->days);
 //    }
 //
-    private function assertTotalDays($s, $e) {
-//      $d = MyDate::diff($s, $e);
+    private function assertTotalDays($start, $end) {
+
+      // Our implementation.
+//      $mydate = new MyDate();
+      $avantiDate = new AvantiDate();
+      $operationWithAvantiDate = new DateOperations($avantiDate);
+
+////      // PHP Implementation to compare with.
+      $phpDate = new phpDate($start, $end);
+      $operationWithPHPDate = new \AvantiDates\DateOperations($phpDate);
+
+//      $myDate = $avantiDate->diff($start, $end);
 //      $a = $this->dateDiff($s, $e);
-//      $this->assertSame($a->days, $d->total_days);
+
+      $this->assertSame($operationWithAvantiDate->diff($start, $end), $operationWithPHPDate->diff($start, $end));
     }
 //
 //    private function assertInvert($s, $e) {
