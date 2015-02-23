@@ -1,6 +1,6 @@
 <?php
 
-//require __DIR__ . '/vendor/symfony/class-loader/Symfony/Component/ClassLoader/Psr4ClassLoader.php';
+require __DIR__ . '/vendor/symfony/class-loader/Symfony/Component/ClassLoader/Psr4ClassLoader.php';
 use Symfony\Component\ClassLoader\Psr4ClassLoader;
 
 $loader = new Psr4ClassLoader();
