@@ -14,7 +14,6 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
    *
    * @dataProvider getDatesAndDaysBetween
    */
-
   public function testCalculateDays($given, $expected) {
     // Our implementation.
     $avantiDate = new AvantiDate();
@@ -77,13 +76,14 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
       // Explanation
       // Month 1: 31 - 10 = 21
       // Month 2: 59 - 01 - 31= 27
-      // total days - month2 - month1: 58 - 27 = 31
+      // FORMULA USED:
+      // (total days month2 + days month2) -  (total days month1 + days month1).
       array(
         'given' => array(
           'start' => '2014/01/10',
           'end' => '2014/02/01',
         ),
-        'expected' => 37,
+        'expected' => 22,
       ),
 
       array(
@@ -91,9 +91,42 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
           'start' => '2014/01/10',
           'end' => '2014/02/10',
         ),
-        'expected' => 47,
+        'expected' => 31,
       ),
 
+      array(
+        'given' => array(
+          'start' => '2014/02/10',
+          'end' => '2014/06/10',
+        ),
+        'expected' => 120,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2014/01/10',
+          'end' => '2014/12/30',
+        ),
+        'expected' => 354,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2014/04/18',
+          'end' => '2014/12/30',
+        ),
+        'expected' => 256,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2014/01/01',
+          'end' => '2014/12/30',
+        ),
+        'expected' => 363,
+      ),
+
+      // @todo: test Leap days.
 
     );
   }
@@ -187,7 +220,6 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
     );
   }
 
-
   /**
    * @dataProvider getDays
    */
@@ -233,10 +265,6 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
 
   }
 
-
-
-
-
   /**
    * Test Dates.
    *
@@ -274,11 +302,11 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
 
 
   // @TODO: simplify using a dateprovider.
-//    public function testSimpleDays() {
-//
+    public function testSimpleDays() {
+
 //      $this->assertDays('2014/01/01', '2014/01/04');
-//
-//    }
+
+    }
 //
 //    public function testSimpleMonths() {
 //

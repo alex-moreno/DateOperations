@@ -17,6 +17,7 @@ class AvantiDate implements DateInterface {
   protected $dateEnd;
 
   /**
+   * Calculate difference between two dates.
    *
    * @param $start
    * @param $end
@@ -78,22 +79,43 @@ class AvantiDate implements DateInterface {
       $numberDays = $dayEnd - $dayStart;
     }
     elseif ($yearStart == $yearEnd) {
-      $numberDays = ($this->getDaysPriorToMonth($monthEnd) - $dayEnd) - ($this->getDaysPriorToMonth($monthStart) - $dayStart);
+      $daysBeforEndMonth = $this->getDaysPriorToMonth($monthEnd - 1) + $dayEnd;
+      $daysBeforStartMonth = $this->getDaysPriorToMonth($monthStart - 1) + $dayStart;
+      $numberDays = $daysBeforEndMonth - $daysBeforStartMonth;
+
+    }
+    else {
+      // Calculate for different years.
+
     }
 
     return intval($numberDays);
   }
 
-
   /**
    *
    * @param $month
-   * @return mixed
+   * @return int
    */
   public function getDaysPriorToMonth($month) {
+    $number_days = 0;
+    // 0 to n - 1 array format vs 1 to n human readable format.
+    $currentMonth = $month - 1;
+
+    // @todo: is leap?
+//    $this->isLeapYear($year) {
+//    $days = array(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334);
+//  }
+//    else {}
     $days = array(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334);
 
-    return $days[$month-1];
+    // Month - 1 as we want to know previous month to the current one.
+    if ($currentMonth >= 0) {
+      // Previous to January, passed days will be 0.
+      $number_days = $days[$currentMonth];
+    }
+
+    return $number_days;
   }
 
   /**
@@ -134,7 +156,8 @@ class AvantiDate implements DateInterface {
    *
    * @param $date
    *   Input date in yyyy/mm/dd format.
-   * @return string
+   *
+   * @return int
    */
   public function getYear($date) {
     return intval(substr($date, 0,4));
@@ -146,7 +169,7 @@ class AvantiDate implements DateInterface {
    * @param $date
    *   Input date in yyyy/mm/dd format.
    *
-   * @return string
+   * @return int
    */
   public function getMonth($date) {
     return intval(substr($date, 5,2));
@@ -158,7 +181,7 @@ class AvantiDate implements DateInterface {
    * @param $date
    *   Input date in yyyy/mm/dd format.
    *
-   * @return string
+   * @return int
    */
   public function getDay($date) {
     return intval(substr($date, 8,2));
