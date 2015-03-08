@@ -9,19 +9,22 @@ use AvantiDates\DateOperations;
  */
 class CustomDateTest extends PHPUnit_Framework_TestCase {
 
+  private $customDate;
+
+  /**
+   * Initial set ups.
+   */
+  public function setUp() {
+    $this->customDate = new AvantiDate();
+  }
+
   /**
    * Test testCalculateDays().
    *
    * @dataProvider getDatesAndDaysBetween
    */
   public function testCalculateDays($given, $expected) {
-    // Our implementation.
-    $avantiDate = new AvantiDate();
-
-    $start = $given['start'];
-    $end = $given['end'];
-    $avantiDate->calculateDaysBetween($start, $end);
-    $this->assertSame($avantiDate->calculateDaysBetween($start, $end), $expected);
+    $this->assertSame($this->customDate->calculateDaysBetween($given['start'], $given['end']), $expected);
   }
 
   /**
@@ -128,11 +131,22 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
 
       // @todo: test Leap days.
 
+
+      // @todo: test dates between years.
+      array(
+        'given' => array(
+          'start' => '2012/01/01',
+          'end' => '2014/12/30',
+        ),
+        'expected' => 363,
+      ),
+
+
     );
   }
 
   /**
-   * @dataProvider getYears
+   * @dataProvider getDates
    */
   public function testGetYear($given, $expected) {
     // Our implementation.
@@ -145,7 +159,7 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
   /**
    * DataProvider.
    */
-  public function getYears() {
+  public function getDates() {
     return array(
       array(
         'given' => '2014/01/01',
@@ -224,11 +238,7 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
    * @dataProvider getDays
    */
   public function testGetDay($given, $expected) {
-    // Our implementation.
-    $avantiDate = new AvantiDate();
-
-    $this->assertSame($avantiDate->getDay($given), $expected);
-
+    $this->assertSame($this->customDate->getDay($given), $expected);
   }
 
   /**
@@ -266,38 +276,165 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
-   * Test Dates.
+   * Test Leap years
    *
-   * @dataProvider getDates
+   * @dataProvider getYears()
    */
-  public function testDates($dateStart, $dateEnd) {
-
-//      $this->assertTotalDays($dateStart, $dateEnd);
+  public function testIsLeapYear($year, $expected) {
+    $this->assertEquals($this->customDate->isLeapYear($year), $expected);
   }
 
   /**
    * DataProvider.
    */
-  public function getDates() {
+  public function getYears() {
     return array(
-      // Simple days in same year.
       array(
-        'given' => '2014/01/01',
-        'expected' => '2014/01/04',
+        'given' => '2014',
+        'expected' => FALSE,
       ),
 
       array(
-        'given' => '2014/01/01',
-        'expected' => '2014/01/04',
+        'given' => '2016',
+        'expected' => TRUE,
       ),
 
       array(
-        'given' => '2014/01/01',
-        'expected' => '2014/01/14',
+        'given' => '2000',
+        'expected' => TRUE,
+      ),
+
+      array(
+        'given' => '2400',
+        'expected' => TRUE,
+      ),
+
+      array(
+        'given' => '2012',
+        'expected' => TRUE,
+      ),
+
+      array(
+        'given' => '2200',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '1800',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '1700',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '1600',
+        'expected' => TRUE,
+      ),
+
+      array(
+        'given' => '1601',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '1700',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '2100',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '2500',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '3400',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '3900',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '3800',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '1900',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '3300',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '3700',
+        'expected' => FALSE,
+      ),
+
+      array(
+        'given' => '2160',
+        'expected' => TRUE,
+      ),
+
+      array(
+        'given' => '2332',
+        'expected' => TRUE,
+      ),
+
+      array(
+        'given' => '2032',
+        'expected' => TRUE,
       ),
 
     );
   }
+
+  /**
+   * Test Dates.
+   *
+   * @dataProvider getDates
+   */
+//  public function testDates($dateStart, $dateEnd) {
+//
+////      $this->assertTotalDays($dateStart, $dateEnd);
+//  }
+//
+//  /**
+//   * DataProvider.
+//   */
+//  public function getDates() {
+//    return array(
+//      // Simple days in same year.
+//      array(
+//        'given' => '2014/01/01',
+//        'expected' => '2014/01/04',
+//      ),
+//
+//      array(
+//        'given' => '2014/01/01',
+//        'expected' => '2014/01/04',
+//      ),
+//
+//      array(
+//        'given' => '2014/01/01',
+//        'expected' => '2014/01/14',
+//      ),
+//
+//    );
+//  }
 
 
 
