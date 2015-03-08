@@ -31,6 +31,7 @@ class AvantiDate implements DateInterface {
   public function diff($start, $end) {
 
     $this->days = $this->calculateDays($start, $end);
+    $this->totalDays = $this->calculateDaysBetween($start, $end);
 
     // Sample object:
     return (object)array(
@@ -84,28 +85,34 @@ class AvantiDate implements DateInterface {
     }
     elseif ($yearStart == $yearEnd) {
       // @TODO: MOVE INTO FUNCTION.
-      $daysBeforEndMonth = $this->getDaysPriorToMonth($monthEnd - 1) + $dayEnd;
-      $daysBeforStartMonth = $this->getDaysPriorToMonth($monthStart - 1) + $dayStart;
+      $daysBeforEndMonth = $this->getDaysPriorToMonth($monthEnd - 1, $this->isLeapYear($yearEnd)) + $dayEnd;
+      $daysBeforStartMonth = $this->getDaysPriorToMonth($monthStart - 1, $this->isLeapYear($yearStart)) + $dayStart;
+
       $numberDays = $daysBeforEndMonth - $daysBeforStartMonth;
     }
     else {
       // Calculate for different years.
-      // 1. Days spent in first year.
-      $daysFirstYear = $this->getDaysPriorToMonth($monthEnd - 1) + $dayEnd;
-      // 2. Days spent in second year.
-      $daysBeforStartMonth = $this->getDaysPriorToMonth($monthStart - 1) + $dayStart;
-//      $numberDays = $daysBeforEndMonth - $daysBeforStartMonth;
+      // 1. Days spent in first year = total days - days until given date.
+      $numberDaysFirstYear = $this->getDaysPriorToMonth(12, $this->isLeapYear($yearStart))
+      - ($this->getDaysPriorToMonth($monthStart - 1, $this->isLeapYear($yearStart)) + $dayStart);
 
-
-      // 3. years in the middle.
+      // 2. years in the middle.
       // for year from $yearStart + 1 to $yearEnd -1
-      $yearIndex = $yearStart;
+      // TODO: MOVE INTO A FUNCTION.
+      $yearIndex = $yearStart + 1;
       while ($yearIndex < $yearEnd) {
         // Number of days in a year.
-
+        $numberDays = $numberDays + $this->getDaysPriorToMonth(12, $this->isLeapYear($yearIndex));
         $yearIndex = $yearIndex + 1;
       }
 
+      $numberDaysLastYear = 0;
+      if ($yearIndex > 1) {
+        // 2. Days spent in second year = Total number of days - passed days.
+        $numberDaysLastYear = $this->getDaysPriorToMonth($monthEnd - 1, $this->isLeapYear($yearEnd)) + $dayEnd;
+      }
+
+      $numberDays = $numberDays + $numberDaysFirstYear + $numberDaysLastYear;
     }
 
     return intval($numberDays);
@@ -115,23 +122,28 @@ class AvantiDate implements DateInterface {
    * Get number of days preceding a month.
    *
    * @param $month
+   *   Month to calculate.
+   * @param $isLeap
+   *   Check for a leap year.
+   *
    * @return int
+   *   Number of days before $month.
    */
-  public function getDaysPriorToMonth($month) {
+  public function getDaysPriorToMonth($month, $isLeap = FALSE) {
     $number_days = 0;
     // 0 to n - 1 array format vs 1 to n human readable format.
     $currentMonth = $month - 1;
 
-    // @todo: is leap?
-//    $this->isLeapYear($year) {
-//    $days = array(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334);
-//  }
-//    else {}
-    $days = array(31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365);
+    if ($isLeap) {
+      $days = $this->daysInLeapYear;
+    }
+    else {
+      $days = $this->daysInYear;
+    }
 
     // Month - 1 as we want to know previous month to the current one.
     if ($currentMonth >= 0) {
-      // Previous to January, passed days will be 0.
+      // Passed days previous to January will be 0.
       $number_days = $days[$currentMonth];
     }
 
@@ -148,14 +160,6 @@ class AvantiDate implements DateInterface {
    *   TRUE if $year is Leap, FALSE otherwise.
    */
   public function isLeapYear($year) {
-//    $isleapYear = FALSE;
-//
-//    if (($year % 4 == 0) || ($year % 400 == 0) || ($year % 100 == 0)) {
-//      $isleapYear = TRUE;
-//    }
-//
-//    return $isleapYear;
-
 
     if ($year % 4 == 0) {
       if ($year % 100  == 0) {

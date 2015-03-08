@@ -131,16 +131,62 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
 
       // @todo: test Leap days.
 
-
       // @todo: test dates between years.
       array(
         'given' => array(
           'start' => '2012/01/01',
           'end' => '2014/12/30',
         ),
-        'expected' => 363,
+        'expected' => 1094,
       ),
 
+      array(
+        'given' => array(
+          'start' => '2012/01/01',
+          'end' => '2014/12/20',
+        ),
+        'expected' => 1084,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2013/01/01',
+          'end' => '2014/12/30',
+        ),
+        'expected' => 728,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2013/01/01',
+          'end' => '2014/10/30',
+        ),
+        'expected' => 667,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '2013/01/01',
+          'end' => '2024/10/30',
+        ),
+        'expected' => 4320,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '1000/01/01',
+          'end' => '2024/10/30',
+        ),
+        'expected' => 374311,
+      ),
+
+      array(
+        'given' => array(
+          'start' => '1000/01/01',
+          'end' => '8000/10/30',
+        ),
+        'expected' => 2557000,
+      ),
 
     );
   }
@@ -149,11 +195,7 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
    * @dataProvider getDates
    */
   public function testGetYear($given, $expected) {
-    // Our implementation.
-    $avantiDate = new AvantiDate();
-
-    $this->assertSame($avantiDate->getYear($given), $expected);
-
+    $this->assertSame($this->customDate->getYear($given), $expected);
   }
 
   /**
@@ -194,10 +236,7 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
    * @dataProvider getMonths
    */
   public function testGetMonth($given, $expected) {
-    // Our implementation.
-    $avantiDate = new AvantiDate();
-
-    $this->assertSame($avantiDate->getMonth($given), $expected);
+    $this->assertSame($this->customDate->getMonth($given), $expected);
 
   }
 
@@ -289,6 +328,11 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
    */
   public function getYears() {
     return array(
+      array(
+        'given' => '2013',
+        'expected' => FALSE,
+      ),
+
       array(
         'given' => '2014',
         'expected' => FALSE,
@@ -439,11 +483,11 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
 
 
   // @TODO: simplify using a dateprovider.
-    public function testSimpleDays() {
-
-//      $this->assertDays('2014/01/01', '2014/01/04');
-
-    }
+//    public function testSimpleDays() {
+//
+////      $this->assertDays('2014/01/01', '2014/01/04');
+//
+//    }
 //
 //    public function testSimpleMonths() {
 //
@@ -596,10 +640,7 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
 //    }
 //
     private function assertTotalDays($start, $end) {
-
-      // Our implementation.
-      $avantiDate = new AvantiDate();
-      $operationWithAvantiDate = new DateOperations($avantiDate);
+      $operationWithAvantiDate = new DateOperations($this->customDate);
 
       // PHP Implementation to compare with.
       $phpDate = new phpDate($start, $end);
