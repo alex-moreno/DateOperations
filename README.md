@@ -5,6 +5,6 @@ Calculate the difference between two given dates without using any of the built 
 
 execute:
 
-'''
-../vendor/bin/phpunit
-'''
+```
+./vendor/phpunit/phpunit/phpunit
+```
