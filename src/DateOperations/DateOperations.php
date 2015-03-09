@@ -1,8 +1,8 @@
 <?php
 
-namespace AvantiDates;
+namespace DateOperations;
 
-use AvantiDates\Interfaces\DateInterface;
+use DateOperations\Interfaces\DateInterface;
 
 /**
  * Created by PhpStorm.

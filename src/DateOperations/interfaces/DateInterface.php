@@ -1,6 +1,6 @@
 <?php
 
-namespace AvantiDates\Interfaces;
+namespace DateOperations\Interfaces;
 
 /**
  * Interface DateInterface

@@ -1,14 +1,14 @@
 <?php
 
-namespace AvantiDates;
+namespace DateOperations;
 
-use AvantiDates\Interfaces\DateInterface;
+use DateOperations\Interfaces\DateInterface;
 
 /**
  * @todo: move to CustomDate
  * Class MyDate
  */
-class AvantiDate implements DateInterface {
+class CustomDate implements DateInterface {
 
   const MONTHS = 12;
 

@@ -1,8 +1,8 @@
 <?php
 
-use AvantiDates\AvantiDate;
-use AvantiDates\phpDate;
-use AvantiDates\DateOperations;
+use DateOperations\CustomDate;
+use DateOperations\phpDate;
+use DateOperations\DateOperations;
 
 /**
  * Class CustomDateTest
@@ -15,7 +15,7 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
    * Initial set ups.
    */
   public function setUp() {
-    $this->customDate = new AvantiDate();
+    $this->customDate = new CustomDate();
   }
 
   /**

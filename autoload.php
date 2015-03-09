@@ -4,6 +4,6 @@ require __DIR__ . '/vendor/symfony/class-loader/Symfony/Component/ClassLoader/Ps
 use Symfony\Component\ClassLoader\Psr4ClassLoader;
 
 $loader = new Psr4ClassLoader();
-$loader->addPrefix('AvantiDates\\', __DIR__ . '/src/AvantiDates');
-$loader->addPrefix('AvantiDates\\Interfaces', __DIR__ . '/src/AvantiDates/Interfaces');
+$loader->addPrefix('DateOperations\\', __DIR__ . '/src/DateOperations');
+$loader->addPrefix('DateOperations\\Interfaces', __DIR__ . '/src/DateOperations/Interfaces');
 $loader->register();
