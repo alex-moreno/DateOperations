@@ -10,6 +10,8 @@ use AvantiDates\Interfaces\DateInterface;
  */
 class AvantiDate implements DateInterface {
 
+  const MONTHS = 12;
+
   private $daysInLeapYear;
   private $daysInYear;
 
@@ -25,22 +27,51 @@ class AvantiDate implements DateInterface {
    * Calculate difference between two dates.
    *
    * @param $start
+   *   Date from.
    * @param $end
+   *   Date to.
+   *
    * @return object
+   *   Object with the difference.
    */
   public function diff($start, $end) {
 
-    $this->days = $this->calculateDays($start, $end);
-    $this->totalDays = $this->calculateDaysBetween($start, $end);
+    $totalDays = $this->calculateDaysBetween($start, $end);
+
+    // @todo
+    // Once we know the number of days, we can approximate the years.
+    $totalYears = $totalDays / $this->daysInYear[$this::MONTHS-1];
+
+    // @todo
+    // And the months.
+    $totalMonths = $totalDays / $this::MONTHS;
 
     // Sample object:
     return (object)array(
-      'years' => null,
-      'months' => null,
-      'days' => null,
-      'total_days' => null,
+      'y' => $totalYears,
+      'm' => $totalMonths,
+      'days' => $totalDays,
       'invert' => null
     );
+  }
+
+  /**
+   * Given two years, calculate years past between.
+   *
+   * @param $start
+   *   First year.
+   * @param $end
+   *   Second year.
+   *
+   * @return int
+   *   Number of years between year $start and year $end
+   */
+  public function calculateYearsBetween($start, $end) {
+    $numberYears = 0;
+    $yearStart = $this->getYear($start);
+    $yearEnd = $this->getYear($end);
+
+    return $numberYears;
   }
 
   /**
@@ -71,6 +102,7 @@ class AvantiDate implements DateInterface {
     // Return value.
     $numberDays = 0;
 
+    // @todo: move to parent.
     $yearStart = $this->getYear($start);
     $monthStart = $this->getMonth($start);
     $dayStart = $this->getDay($start);
@@ -84,38 +116,57 @@ class AvantiDate implements DateInterface {
       $numberDays = $dayEnd - $dayStart;
     }
     elseif ($yearStart == $yearEnd) {
-      // @TODO: MOVE INTO FUNCTION.
-      $daysBeforEndMonth = $this->getDaysPriorToMonth($monthEnd - 1, $this->isLeapYear($yearEnd)) + $dayEnd;
-      $daysBeforStartMonth = $this->getDaysPriorToMonth($monthStart - 1, $this->isLeapYear($yearStart)) + $dayStart;
+      $daysBeforeEndMonth = $this->getDaysRemainingMonth($monthEnd,$dayEnd, $this->isLeapYear($yearEnd));
+      $daysBeforeStartMonth = $this->getDaysRemainingMonth($monthStart,$dayStart, $this->isLeapYear($yearStart));
 
-      $numberDays = $daysBeforEndMonth - $daysBeforStartMonth;
+      $numberDays = $daysBeforeEndMonth - $daysBeforeStartMonth;
     }
+    // Calculate days for different years.
     else {
-      // Calculate for different years.
       // 1. Days spent in first year = total days - days until given date.
-      $numberDaysFirstYear = $this->getDaysPriorToMonth(12, $this->isLeapYear($yearStart))
-      - ($this->getDaysPriorToMonth($monthStart - 1, $this->isLeapYear($yearStart)) + $dayStart);
+      $numberDaysFirstYear = $this->getDaysRemainingMonth(12, 31 , $this->isLeapYear($yearStart))
+      - $this->getDaysRemainingMonth($monthStart - 1, $dayStart , $this->isLeapYear($yearStart));
 
-      // 2. years in the middle.
-      // for year from $yearStart + 1 to $yearEnd -1
-      // TODO: MOVE INTO A FUNCTION.
-      $yearIndex = $yearStart + 1;
-      while ($yearIndex < $yearEnd) {
-        // Number of days in a year.
-        $numberDays = $numberDays + $this->getDaysPriorToMonth(12, $this->isLeapYear($yearIndex));
-        $yearIndex = $yearIndex + 1;
-      }
+      // 2. Days between years.
+      $numberDays = $this->getDaysBetweenYears($yearStart, $yearEnd);
 
-      $numberDaysLastYear = 0;
-      if ($yearIndex > 1) {
-        // 2. Days spent in second year = Total number of days - passed days.
-        $numberDaysLastYear = $this->getDaysPriorToMonth($monthEnd - 1, $this->isLeapYear($yearEnd)) + $dayEnd;
-      }
+      // 3. Days spent in second year = Total number of days - passed days.
+      $numberDaysLastYear = $this->getDaysPriorToMonth($monthEnd - 1, $this->isLeapYear($yearEnd)) + $dayEnd;
 
+      // 4. Lastly, sum the results.
       $numberDays = $numberDays + $numberDaysFirstYear + $numberDaysLastYear;
     }
 
     return intval($numberDays);
+  }
+
+  public function getDaysRemainingMonth($month, $currentDay, $isLeapYear) {
+    return $this->getDaysPriorToMonth($month - 1, $isLeapYear) + $currentDay;
+  }
+
+  /**
+   * Get number of days between two given years.
+   *
+   * @param $yearStart
+   *   Year from.
+   * @param $yearEnd
+   *   Year to.
+   *
+   * @return int
+   *   Number of days or 0 if yearend < yearstart.
+   */
+  public function getDaysBetweenYears($yearStart, $yearEnd) {
+    $numberDays = 0;
+
+    // 2. years in the middle.
+    // for year from $yearStart + 1 to $yearEnd -1
+    $yearIndex = $yearStart + 1;
+    while ($yearIndex < $yearEnd) {
+      // Number of days in a year.
+      $numberDays = $numberDays + $this->getDaysPriorToMonth(12, $this->isLeapYear($yearIndex));
+      $yearIndex = $yearIndex + 1;
+    }
+    return $numberDays;
   }
 
   /**

@@ -65,16 +65,6 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
         'expected' => 24,
       ),
 
-      // NOTE: Expected result as per current spec.
-      array(
-        'given' => array(
-          'start' => '2014/01/10',
-          'end' => '2014/01/01',
-        ),
-        'expected' => -9,
-      ),
-
-
       // Different months and days, same years.
       // Explanation
       // Month 1: 31 - 10 = 21
@@ -447,6 +437,29 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
   }
 
   /**
+   * @dataProvider getDatesAndDaysBetween
+   */
+  public function testAssertTotalDays($given, $expected) {
+    // Custom implementation.
+    $operationWithAvantiDate = new DateOperations($this->customDate);
+    $customDiff = $operationWithAvantiDate->diff($given['start'], $given['end']);
+
+    // PHP Implementation to compare with.
+    $operationWithPHPDate = new DateOperations(new phpDate($given['start'], $given['end']));
+    $nativeDiff = $operationWithPHPDate->diff($given['start'], $given['end']);
+
+    // Testing days.
+    $this->assertSame($customDiff->days, $nativeDiff->days);
+
+    // @todo: Testing months.
+//    $this->assertSame($customDiff->m, $nativeDiff->m);
+
+    // @todo: Testing years.
+    // Testing years.
+//    $this->assertSame($customDiff->y, $nativeDiff->y);
+  }
+
+  /**
    * Test Dates.
    *
    * @dataProvider getDates
@@ -639,16 +652,6 @@ class CustomDateTest extends PHPUnit_Framework_TestCase {
 //      $this->assertSame($a->d, $d->days);
 //    }
 //
-    private function assertTotalDays($start, $end) {
-      $operationWithAvantiDate = new DateOperations($this->customDate);
-
-      // PHP Implementation to compare with.
-      $phpDate = new phpDate($start, $end);
-      $operationWithPHPDate = new DateOperations($phpDate);
-
-      $this->assertSame($operationWithAvantiDate->diff($start, $end), $operationWithPHPDate->diff($start, $end));
-    }
-
 //
 //    private function assertInvert($s, $e) {
 //      $d = MyDate::diff($s, $e);
